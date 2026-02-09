@@ -2,16 +2,16 @@ import { createTrack, getTrackMetadata } from "../api/trackApi";
 import { useTrackStore } from "../store/trackStore";
 
 export function useTrack() {
-  const { track, error, loading, setTrack, setError, setLoading } = useTrackStore();
+  const { track, error, loading, setTrack, setError, setLoading, clear } = useTrackStore();
 
-  const fetchByIsrc = async (isrc: string) => {
+  const getTrackByIsrc = async (isrc: string) => {
     try {
       setError(null);
       setLoading(true);
       const data = await getTrackMetadata(isrc);
       setTrack(data);
     } catch {
-      setError("Track search failed!");
+      setError("Track search failed.");
     } finally {
       setLoading(false);
     }
@@ -24,11 +24,11 @@ export function useTrack() {
       const data = await createTrack(isrc, token);
       setTrack(data);
     } catch {
-      setError("Track creation failed!");
+      setError("Track creation failed.");
     } finally {
       setLoading(false);
     }
   };
 
-  return { track, error, loading, fetchByIsrc, createByIsrc };
+  return { track, error, loading, getTrackByIsrc, createByIsrc, clear };
 }

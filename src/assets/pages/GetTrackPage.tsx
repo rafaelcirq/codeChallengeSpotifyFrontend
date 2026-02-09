@@ -1,30 +1,54 @@
 import { IsrcSearchForm } from "../components/IsrcSearchForm";
 import { TrackMetadata } from "../components/TrackMetaData";
 import { ErrorMessage } from "../components/ErrorMessage";
-import { useTrackStore } from "../store/trackStore";
-import { getTrackMetadata } from "../api/trackApi";
+import { Box, Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import { useEffect } from "react";
+import { LoadingBackdrop } from "../components/LoadingBrackdrop";
+import { useTrack } from "../hooks/useTrack";
 
 export function GetTrackPage() {
-  const { track, setTrack, error, setError, setLoading } = useTrackStore();
 
-  const handleSubmit = async (isrc: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await getTrackMetadata(isrc);
-      setTrack(response);
-    } catch (err: any) {
-      setError(err.response?.data?.message || err.message || "Failed to get track");
-    } finally {
-      setLoading(false);
-    }
+  const { track, error, getTrackByIsrc, clear } = useTrack();
+
+  useEffect(() => {
+    clear();
+  }, [clear]);
+
+  const columnStyles = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    width: "50%"
   };
 
   return (
     <>
-      <IsrcSearchForm onSubmit={handleSubmit} label="Get Track" />
-      {error && <ErrorMessage message={error} />}
-      {track && <TrackMetadata track={track} />}
+      <Box
+        display="flex"
+        width="100vw"
+        height="100vh"
+      >
+        <Box sx={{ ...columnStyles }}
+          display="flex"
+          flexDirection="column"
+          alignItems="stretch"
+        >
+          <IsrcSearchForm onSubmit={getTrackByIsrc} label="Get Track" />
+          <Link component={RouterLink} to="/create"
+            mt={2}
+            align="left"
+          >
+            Create tracks
+          </Link>
+        </Box>
+        <Box sx={{ ...columnStyles }}>
+          {error && <ErrorMessage message={error} />}
+          {!error && track && <TrackMetadata track={track} />}
+        </Box>
+      </Box>
+      <LoadingBackdrop />
     </>
   );
 }

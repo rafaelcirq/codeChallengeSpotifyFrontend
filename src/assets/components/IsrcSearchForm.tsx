@@ -3,11 +3,12 @@ import { useState } from "react";
 
 interface Props {
   onSubmit: (isrc: string) => void;
+  isTokenMissing?: boolean;
   label: string;
   disabled?: boolean;
 }
 
-export function IsrcSearchForm({ onSubmit, label, disabled }: Props) {
+export function IsrcSearchForm({ onSubmit, isTokenMissing, label, disabled }: Props) {
   const [isrc, setIsrc] = useState("");
 
   return (
@@ -23,11 +24,12 @@ export function IsrcSearchForm({ onSubmit, label, disabled }: Props) {
           value={isrc}
           onChange={(e) => setIsrc(e.target.value)}
           fullWidth
-          disabled={disabled}
         />
         <Button
           type="submit"
-          disabled={!isrc || disabled}
+          disabled={(!isrc || disabled) || isTokenMissing}
+          color="primary"
+          variant="contained"
         >
           {label}
         </Button>

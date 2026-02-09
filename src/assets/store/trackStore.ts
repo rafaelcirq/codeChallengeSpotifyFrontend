@@ -5,7 +5,7 @@ interface TrackState {
     track: Track | null;
     loading: boolean;
     error: string | null;
-    setTrack: (track: Track) => void;
+    setTrack: (track: Track | null) => void;
     clear: () => void;
     setError: (error: string | null) => void;
     setLoading: (loading: boolean) => void;

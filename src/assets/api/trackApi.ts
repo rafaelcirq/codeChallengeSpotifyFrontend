@@ -14,7 +14,7 @@ function getApiErrorMessage(error: unknown): string {
     return (
       error.response?.data?.message ||
       error.response?.statusText ||
-      "Failed to communicate to api!"
+      "Failed to communicate to api."
     );
   }
 
@@ -22,7 +22,7 @@ function getApiErrorMessage(error: unknown): string {
     return error.message;
   }
 
-  return "Unexpected error!";
+  return "Unexpected error.";
 }
 
 export async function createTrack(

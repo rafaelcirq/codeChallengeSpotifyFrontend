@@ -1,73 +1,49 @@
-# React + TypeScript + Vite
+# codeChallengeSPotify Frontend - React + Typescript
+This project is a frontend React application developed as part of a Full Stack Developer code challenge.
+It integrates with the codeChallengeSpotify Rest API (https://github.com/rafaelcirq/codeChallengeSpotifyBackend) using music tracks ISRC codes to display their information retreived from the backend or store it, using a Spotify API Token.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Spotify API Token
+A standard Spotify Access Token could not be obtained since Spotify has blocked creation of new Apps.
+A temporary token can be obtained at the get-an-album documentation page (https://developer.spotify.com/documentation/web-api/reference/get-an-album) and used as an input in this project to create new tracks.
+The token is stored locally in the browser and is used only for authenticated requests to the backend endpoint responsible for creating new track records.
 
-Currently, two official plugins are available:
+This approach is strictly a temporary solution and is not suitable for production environments.
+Since the token is handled on the client side, it is exposde to typical frontend risks such as XSS attacks and should not be used for sensitive or long-lived credentials.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+In a real-world application, authentication should be handled by the backend using a proper OAuth flow and secure HTTP-only cookies, ensuring that tokens are never exposed to client-side JavaScript.
 
-## React Compiler
+The assumption in this challenge is that the backend environment is controlled and that the token provided is short-lived and used only for demonstration purposes.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Features
+- Search track metadata by ISRC code
+- Create and store new tracks
+- Display:
+  - Track name
+  - Artist name
+  - Album name
+  - Album cover image
+  - Explicit content indicator
+  - Playback duration in seconds  
+- Error handling
+- Responsive UI with Material UI (MUI)
+- Routing with React Router
+- Global state management with Zustand
 
-## Expanding the ESLint configuration
+## Stacks
+- React + Typescript
+- React router
+- Zustand for state management
+- Axios for HTTP requests
+- Material UI for UI
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Setup and Installtion
+### Prerequisites
+- Node.js (v18+ recommended)
+- Backend running at http://localhost:8080/codechallenge
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Installation
+```bash
+git clone https://github.com/rafaelcirq/codeChallengeSpotifyBackend
+cd .\codeChallengeSpotifyBackend\
+npm install
+npm run dev

@@ -1,20 +1,25 @@
 import { IsrcSearchForm } from "../components/IsrcSearchForm";
 import { TrackMetadata } from "../components/TrackMetaData";
 import { ErrorMessage } from "../components/ErrorMessage";
-import { Box, Link, TextField } from "@mui/material";
+import { Box, Link, Dialog, IconButton, TextField } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { useState } from "react";
 import { LoadingBackdrop } from "../components/LoadingBrackdrop";
 import { useTrack } from "../hooks/useTrack";
+import CloseIcon from "@mui/icons-material/Close";
 import { useAuthToken } from "../hooks/useAuthToken";
 
-export function CreateTrackPage() {
+export function CreateTrackPageMobile() {
 
-  const { track, error, createByIsrc } = useTrack();
+  const { track, error, clear, createByIsrc } = useTrack();
+  const [openModal, setOpenModal] = useState(false);
   const { token, setToken } = useAuthToken();
 
-  const handleSubmit = (isrc: string) => {
+  const handleSubmit = async (isrc: string) => {
     if (!token.trim()) return;
-    createByIsrc(isrc, token);
+    clear();
+    await createByIsrc(isrc, token);
+    setOpenModal(true);
   };
 
   const columnStyles = {
@@ -22,17 +27,14 @@ export function CreateTrackPage() {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    width: "50%"
+    width: "100%",
   };
 
   return (
     <>
-      <Box
-        display="flex"
-        width="100vw"
-        height="100vh"
-      >
-        <Box sx={{ ...columnStyles }}
+      <Box display="flex" width="100vw" height="100vh">
+        <Box
+          sx={{ ...columnStyles }}
           display="flex"
           flexDirection="column"
           alignItems="stretch"
@@ -54,11 +56,19 @@ export function CreateTrackPage() {
             Get tracks
           </Link>
         </Box>
-        <Box sx={{ ...columnStyles }}>
-          {error && <ErrorMessage message={error} />}
-          {!error && track && <TrackMetadata track={track} />}
-        </Box>
       </Box>
+
+      {/* Modal */}
+      <Dialog open={openModal} onClose={() => setOpenModal(false)} fullWidth>
+        <Box display="flex" justifyContent="flex-end" p={1}>
+          <IconButton onClick={() => setOpenModal(false)}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        {error && <ErrorMessage message={error} />}
+        {track && <TrackMetadata track={track} />}
+      </Dialog>
+
       <LoadingBackdrop />
     </>
   );

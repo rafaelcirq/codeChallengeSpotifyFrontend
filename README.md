@@ -36,6 +36,16 @@ The assumption in this challenge is that the backend environment is controlled a
 - Axios for HTTP requests
 - Material UI for UI
 
+## Live Demo
+
+The frontend has been deployed to GitHub Pages and can be accessed here:
+
+[https://rafaelcirq.github.io/codeChallengeSpotifyFrontend/#/]
+
+The app interacts with my backend API (it's repository can be accessed below). To make it fully functional, you need to have the backend installed and running locally on the correct port. Without the backend, most features will not work.
+
+Backend repository: https://github.com/rafaelcirq/codeChallengeSpotifyBackend
+
 ## Setup and Installtion
 ### Prerequisites
 - Node.js (v18+ recommended)

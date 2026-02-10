@@ -10,8 +10,11 @@ export function useTrack() {
       setLoading(true);
       const data = await getTrackMetadata(isrc);
       setTrack(data);
-    } catch {
-      setError("Track search failed.");
+    } catch (err: any) {
+      const message =
+        err.message ||
+        "Track search failed.";
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -23,8 +26,11 @@ export function useTrack() {
       setLoading(true);
       const data = await createTrack(isrc, token);
       setTrack(data);
-    } catch {
-      setError("Track creation failed.");
+    } catch (err: any) {
+      const message =
+        err.message ||
+        "Track creation failed.";
+      setError(message);
     } finally {
       setLoading(false);
     }

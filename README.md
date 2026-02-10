@@ -53,7 +53,7 @@ Backend repository: https://github.com/rafaelcirq/codeChallengeSpotifyBackend
 
 ### Installation
 ```bash
-git clone https://github.com/rafaelcirq/codeChallengeSpotifyBackend
-cd .\codeChallengeSpotifyBackend\
+git clone https://github.com/rafaelcirq/codeChallengeSpotifyFrontend
+cd .\codeChallengeSpotifyFrontend\
 npm install
 npm run dev
